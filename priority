@@ -1,0 +1,103 @@
+#include<stdio.h>
+#define MAX 100
+int QUEUE[MAX];
+int FRONT=-1;
+int REAR=-1;
+void insert(int);
+void pop();
+void display();
+void main()
+{
+    int choice;
+   
+    while(1)
+    {
+        printf("1.TO INSERT\n2.TO DELETE\n3.TO DISPLAY");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:
+            {
+                int val;
+                printf("ENTER VALUE TO INSERT");
+                scanf("%d",&val);
+                insert(val);
+                break;
+            }
+            case 2:
+            {
+               
+                pop();
+                break;
+            }
+            case 3:
+            {
+                display();
+                break;
+            }
+            default:printf("enter correct choice");
+                    break;
+            
+        } 
+    }
+}
+void insert(int value)
+{
+    int i;int j;
+    if(FRONT==-1 && REAR==-1)
+    {
+        FRONT++;
+        REAR++;
+        QUEUE[REAR]=value;
+    }
+    else
+    {
+        for(i=REAR;i>=FRONT && value>=QUEUE[i];i--)
+        {
+            QUEUE[i+1]=QUEUE[i];
+        }
+        QUEUE[i+1]=value;
+        REAR++;
+       
+    }
+}
+void pop()
+{
+    if(REAR==-1 && FRONT==-1)
+    {
+        printf("CANT DELETE");
+    }
+    else
+    {
+        int del_ele;
+        printf("ENTER DATA TO DELETE");
+        scanf("%d",&del_ele);
+        for(int i=FRONT;i<=REAR;i++)
+        {
+        if(QUEUE[i]==del_ele)
+        {
+            for(;i<=REAR;i++)
+            {
+                QUEUE[i]=QUEUE[i+1];
+            }
+            REAR--;
+        }
+        }
+   
+    }
+}
+void display()
+{
+    if(FRONT==-1 && REAR==-1)
+    {
+        printf("NO ELEMENTS TO DISPLAY");
+    }
+    else
+    {
+        for(int i=FRONT;i<=REAR;i++)
+        {
+            printf("%d",QUEUE[i]);
+            printf("\n");
+        }
+    }
+}
