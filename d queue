@@ -1,0 +1,115 @@
+#include<stdio.h>
+#define MAX 100
+
+int left = -1;
+int right = -1;
+int QUEUE[MAX];
+
+void insert_front();
+void insert_end();
+void delete_front();
+void delete_end();
+void display();
+
+void main() {
+    int choice;
+    while (1) {
+        printf("1. ENTER BEG\n2. ENTER END\n3. DELETE BEG\n4. DELETE END\n5. DISPLAY\n");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                insert_front();
+                break;
+            case 2:
+                insert_end();
+                break;
+            case 3:
+                delete_front();
+                break;
+            case 4:
+                delete_end();
+                break;
+            case 5:
+                display();
+                break;
+            default:
+                printf("Enter correct choice\n");
+                break;
+        }
+    }
+}
+
+void insert_front() {
+    int val;
+    printf("Enter value to add: ");
+    scanf("%d", &val);
+
+    if ((left == 0 && right == MAX - 1) || (left == right + 1)) {
+        printf("QUEUE OVERFLOW\n");
+    } else {
+        if (left == -1) {
+            left = 0;
+            right = 0;
+        } else {
+            left = (left == 0) ? MAX - 1 : left - 1;
+        }
+        QUEUE[left] = val;
+    }
+}
+
+void insert_end() {
+    int val;
+    printf("Enter value to add: ");
+    scanf("%d", &val);
+
+    if ((left == 0 && right == MAX - 1) || (left == right + 1)) {
+        printf("QUEUE OVERFLOW\n");
+    } else {
+        if (left == -1) {
+            left = 0;
+            right = 0;
+        } else {
+            right = (right == MAX - 1) ? 0 : right + 1;
+        }
+        QUEUE[right] = val;
+    }
+}
+
+void delete_end() {
+    if (left == -1) {
+        printf("UNDERFLOW\n");
+    } else {
+        printf("THE ELEMENT DELETED: %d\n", QUEUE[right]);
+        if (left == right) {
+            left = -1;
+            right = -1;
+        } else {
+            right = (right == 0) ? MAX - 1 : right - 1;
+        }
+    }
+}
+
+void delete_front() {
+    if (left == -1) {
+        printf("UNDERFLOW\n");
+    } else {
+        printf("THE ELEMENT DELETED: %d\n", QUEUE[left]);
+        if (left == right) {
+            left = -1;
+            right = -1;
+        } else {
+            left = (left == MAX - 1) ? 0 : left + 1;
+        }
+    }
+}
+
+void display() {
+    if (left == -1) {
+        printf("UNDERFLOW\n");
+    } else {
+        for (int i = left; i <= right; i++) {
+            printf("%d ", QUEUE[i]);
+        }
+        printf("\n");
+    }
+}
