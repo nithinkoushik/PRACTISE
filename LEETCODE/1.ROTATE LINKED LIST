@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct node* head = NULL;
+
+void insert(int val) {
+    struct node* ptr = (struct node*)malloc(sizeof(struct node));
+    if (ptr == NULL) {
+        printf("MEMORY FULL!");
+    } else {
+        if (head == NULL) {
+            ptr->data = val;
+            head = ptr;
+            ptr->next = NULL;
+        } else {
+            struct node* temp;
+            temp = head;
+            while (temp->next != NULL) {
+                temp = temp->next;
+            }
+            temp->next = ptr;
+            ptr->data = val;
+            ptr->next = NULL;
+        }
+    }
+}
+
+int delete() {
+    int del_ele;
+    struct node* temp;
+    struct node* prev;
+    temp = head;
+    if (head == NULL) {
+        printf("EMPTY");
+    } else {
+        while (temp->next != NULL) {
+            prev = temp;
+            temp = temp->next;
+        }
+        del_ele = temp->data;
+        prev->next = NULL;
+        free(temp);
+    }
+    return del_ele;
+}
+
+void insertbeg(int val) {
+    struct node* ptr = (struct node*)malloc(sizeof(struct node));
+    if (ptr == NULL) {
+        printf("MEMORY FULL");
+    } else {
+        if (head == NULL) {
+            ptr->data = val;
+            ptr->next = NULL;
+            head = ptr;
+        } else {
+            ptr->data = val;
+            ptr->next = head;
+            head = ptr;
+        }
+    }
+}
+
+void display() {
+    struct node* current = head;
+    if (current == NULL) {
+        printf("empty");
+    } else {
+        while (current != NULL) {
+            printf("%d ", current->data);
+            current = current->next;
+        }
+        printf("\n");
+    }
+}
+
+void rotate() {
+    int del;
+    del = delete();
+    insertbeg(del);
+}
+
+int main() {
+    int i = 1;
+    int k;
+
+    insert(1);
+    insert(2);
+    insert(3);
+    insert(4);
+    insert(5);
+
+    printf("Enter value of k: ");
+    scanf("%d", &k);
+
+    while (i <= k) {
+        rotate();
+        i++;
+    }
+    display();
+
+    return 0;
+}
